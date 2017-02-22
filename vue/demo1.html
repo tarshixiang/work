@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no">	
+	<title>Document</title>
+	<style> 
+		input{
+			border: 1px solid red;
+		}
+
+	</style>
+</head>
+<body>
+	<template id="register">
+		<div>
+			<input type="text" v-model='username' placeholder="register">
+			<input type="text" v-model='password' placeholder="password">
+			<input type="email" v-model='email' placeholder="email">
+			<button v-on:click='registerGet(username,password,email)'>register</button>
+		</div>
+	</template >
+		
+	<template id="login"> 
+		<div>
+			<h2>用户{{aa}}</h2>
+			<input type="text" v-model='username' placeholder="register">
+			<input type="text" v-model='password' placeholder="password">
+			<button v-on:click='loginGet(username,password)'>login</button>
+		</div>	
+	</template>
+	
+	<template  id='resetting'>
+		<div>
+			<h2>修改密码,邮箱</h2>
+			<input type="email" v-model='email'>
+			<button v-on:click='resettingGet(email)'>login</button>
+		</div>
+	</template>
+
+	<div id="box">
+		<h1>vue-router</h1>
+		<router-link to="/register">Go to register</router-link><br>
+		<router-link to="/login">Go to login</router-link><br>
+		<router-link to="/resetting">Go to resetting</router-link>
+		<router-view></router-view>
+	</div>
+
+</body>
+</html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue-router/2.2.1/vue-router.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/parse/1.9.2/parse.min.js"></script>
+
+
+<script>
+	Parse.initialize('motern');
+	Parse.serverURL = 'http://192.168.10.154:1337/parse';
+	
+		
+		// Declare the types.
+	var Post = Parse.Object.extend("Post");
+	var Comment = Parse.Object.extend("Comment");
+
+	// Create the post
+	var myPost = new Post();
+	myPost.set("title", "I'm Hungry");
+	myPost.set("content", "Where should we go for lunch?");
+
+	// Create the comment
+	var myComment = new Comment();
+	myComment.set("content", "Let's do Sushirrito.");
+
+	// Add the post as a value in the comment
+	myComment.set("parent", myPost);
+
+	// This will save both myPost and myComment
+	myComment.save();
+
+	console.log(Post)
+
+	const reg = {
+		template:'#register',
+		data:function(){
+			return {
+				username:'',
+				password:'',
+				email:''
+			}
+		},
+		methods:{
+			registerGet:function(us,ps,em){
+				console.log(us,ps,em);
+				var user = new Parse.User();
+				user.set("username", us);
+				user.set("password", ps);
+				user.set("email", em);
+
+				// other fields can be set just like with Parse.Object
+				user.set("phone", "415-392-0202");
+
+				user.signUp(null, {
+				  success: function(user) {
+				    // Hooray! Let them use the app now.
+				    console.log(user,'success')
+				  },
+				  error: function(user, error) {
+				    // Show the error message somewhere and let the user try again.
+				    console.log("Error: " + error.code + " " + error.message);
+				  }
+				});
+			}
+		}
+	}
+
+	const log = {
+		template:'#login',
+		data:function(){
+			return {
+				username:'',
+				password:'',
+				aa:''
+			}
+		},
+		methods:{
+			loginGet:function(us,ps){
+				console.log(us,ps);
+
+				Parse.User.logIn(us, ps, {
+					success: function(user) {
+					    // Do stuff after successful login.
+					    console.log(user)
+					},
+					error: function(user, error) {
+					    // The login failed. Check error to see why.
+					    console.log('err login');
+					}
+				});
+				(function(){
+				var currentUser = Parse.User.current();
+					if (currentUser) {
+					    // do stuff with the user
+					    console.log('current login')
+					    this.aa = us;
+					    console.log(this.aa,us);
+					} else {
+					    // show the signup or login page
+					    console.log('err login');
+					}
+				})();
+			}
+			
+		}
+	}
+
+	const res = {
+		template: '#resetting',
+		data:function(){
+			return {
+				email:''
+			}
+		},
+		methods:{
+			resettingGet:function(em){
+				console.log(em)
+				Parse.User.requestPasswordReset(em, {
+				  success: function() {
+				  // Password reset request was sent successfully
+				  	console.log('resetting')
+				  },
+				  error: function(error) {
+				    // Show the error message somewhere
+				    alert("Error: " + error.code + " " + error.message);
+				  }
+				});
+			}
+		}
+	}
+
+	const routes = [
+		{path:'/register',component:reg},
+		{path:'/login',component:log}	,
+		{path:'/resetting',component:res}
+	]
+
+	const router = new VueRouter({
+		routes
+	})
+
+	const app = new Vue({
+		router
+	}).$mount('#box')
+</script>
+
+
+	
+	
+	
+
+	
+

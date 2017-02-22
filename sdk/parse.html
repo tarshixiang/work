@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/parse/1.9.2/parse.min.js"></script>
+</head>
+<body>
+	
+</body>
+
+<script>
+	Parse.initialize('motern');
+	Parse.serverURL = 'http://192.168.10.154:1337/parse';
+	var GameScore = Parse.Object.extend("sxScore");
+	var sxScore = new GameScore();
+
+	
+	sxScore.set("score", 123);
+	sxScore.set("playerName", "sx llll");
+	sxScore.set("cheatMode", false);
+	sxScore.set("skills", ["pwnage", "flying"]);
+
+	sxScore.save(null, {
+	  success: function(sxScore) {
+	    // Now let's update it with some new data. In this case, only cheatMode and score
+	    // will get sent to the cloud. playerName hasn't changed.
+	    sxScore.set("cheatMode", true);
+	    sxScore.set("score", 12132);
+	    sxScore.save();
+
+	    var score = sxScore.get("score");
+		var playerName = sxScore.get("playerName");
+		var cheatMode = sxScore.get("cheatMode");
+		var skills = sxScore.get("skills");
+		var objectId = sxScore.id;
+		var updatedAt = sxScore.updatedAt;
+		var createdAt = sxScore.createdAt;
+
+		// console.log(score,playerName,cheatMode,skills,objectId,updatedAt,createdAt);
+
+
+		sxScore.fetch({
+		  success: function(myObject) {
+		    // The object was refreshed successfully.
+		    // console.log(myObject);
+		  },
+		  error: function(myObject, error) {
+		    // The object was not refreshed successfully.
+		    // error is a Parse.Error with an error code and message.
+		  }
+		});
+
+		
+		// console.log(score,playerName,cheatMode,skills,objectId,updatedAt,createdAt);
+
+	  }
+	});
+	var zz = Parse.Object.extend("GameScore");
+	var gameScore = new zz();
+
+	gameScore.save(null,{
+		success:function(gameScore){
+			gameScore.set("score", 123);
+			gameScore.set("playerName", "gm sss");
+			gameScore.set("cheatMode", false);
+			gameScore.set("skills", ["pwnage", "flying"]);
+
+			gameScore.fetch({
+			  	success:function(myObject){
+			  		// console.log(myObject);
+			  	}
+		  })
+		}
+	})
+	  
+	// var sxScore = Parse.Object.extend('sxScore');
+	// var query = new Parse.Query(sxScore);
+	var gameScore = Parse.Object.extend('gameScore');
+	var query = new Parse.Query(gameScore);
+	// query.equalTo("playerName", "sx llll");
+	// query.lessThan("score", 1213223);
+	query.containedIn("playerName",
+                  ["sx llll", "gm sss", "Shawn Simon"]);
+	query.find({
+		success:function(res){
+			console.log(res);
+		}
+	})
+
+</script>
+</html>

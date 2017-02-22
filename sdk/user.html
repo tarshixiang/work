@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		var user = new Parse.User();//注册
+		user.set('username','myName');//password email phone
+		user.signUp(null,{success:function(){}})
+
+		logIn//登录
+
+		if(Parse.User.current()){
+			//已经登陆
+		}else{
+			//展示登陆 注册页面
+		}
+
+		Parse.User.logOut().then(() => {//判断当前用户
+		  var currentUser = Parse.User.current();  // this will now be null//注销用户
+		});
+
+		Parse.User.become('session-token-here').then(function(user){},function(error){})
+		//设置当前用户
+
+		//	一封邮件发给不同用户 他们有读写操作
+		var Message = Parse.Object.extend("Message");
+		var groupMessage = new Message();
+		var groupACL = new Parse.ACL();
+
+		// userList is an array with the users we are sending this message to.
+		for (var i = 0; i < userList.length; i++) {
+		  groupACL.setReadAccess(userList[i], true);
+		  groupACL.setWriteAccess(userList[i], true);
+		}
+
+		groupMessage.setACL(groupACL);
+		groupMessage.save();
+
+		//作者发布，全部可读，自己可写
+		var publicPost = new Post();
+		var postACL = new Parse.ACL(Parse.User.current());
+		postACL.setPublicReadAccess(true);
+		publicPost.setACL(postACL);
+		publicPost.save();
+		
+
+		//修改密码 发送邮箱
+		Parse.User.requestPasswordReset("email@example.com", {
+		  success: function() {
+		  // Password reset request was sent successfully
+		  },
+		  error: function(error) {
+		    // Show the error message somewhere
+		    alert("Error: " + error.code + " " + error.message);
+		  }
+		});
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+	</script>
+</body>
+</html>

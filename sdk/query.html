@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		//约束查询
+		var GameScore = Parse.Object.extend("GameScore")
+		var query = new Parse.Query(GameScore);
+		query.equalTo('playerName' ,'dan stem');//满足这条件
+		query.notEqualTo('playerName' ,'dan stem')//不满足这条件
+		query.greatThan('age',18)//年龄大于18
+		query.limit(10)
+		query.first({
+			success:function () {
+				
+			}
+		})//取满足条件的第一条
+		query.skip(10)//跳过10 
+		query.ascending/ query.descending //升序 降序
+		query.lessThan() // <
+		query.lessThanOrEqualTo("wins", 50);// <=
+		greaterThan / greaterThanOrEqualTo // >/>=
+		query.containedIn("playerName",
+                  ["Jonathan Walsh", "Dario Wunsch", "Shawn Simon"]);
+		// notContainedIn
+		query.exists("score");
+		//  doesNotExists
+		innerQuery.exists("image");//图片格式
+
+		var Team = Parse.Object.extend("Team");
+		var teamQuery = new Parse.Query(Team);
+		teamQuery.greaterThan("winPct", 0.5);
+		var userQuery = new Parse.Query(Parse.User);
+		userQuery.matchesKeyInQuery("hometown", "city", teamQuery);
+		userQuery.find({
+		  success: function(results) {
+		    // results has the list of users with a hometown team with a winning record
+		  }
+		});
+
+		query.startWith('name','big daddy,s')//big daddy,s开头
+		query.matchesQuery("post", innerQuery);//有 innerQuery图片的 post评论
+		//doesNotMatchQuery 没有
+		query.include("post"); //相关内容的帖子	
+		query.include(["post.author"]);//相关内容帖子的作者
+
+		query.equalTo("playerName", "Sean Plott");
+		query.count({success:function(){}})// 只需要数量 具体玩家玩游戏的数量
+
+		var mainQuery = Parse.Query.or(lotsOfWins, fewWins);
+		mainQuery.find({success:function(){}}) //选择
+
+
+
+
+
+
+
+
+
+	</script>
+</body>
+</html>

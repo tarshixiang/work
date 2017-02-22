@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		parse.files//  数据过大，图片等 
+
+		1， base64编码等文件
+		var base64 = "V29ya2luZyBhdCBQYXJzZSBpcyBncmVhdCE=";
+		var file = new Parse.File("myfile.txt", { base64: base64 });
+		
+		2，array of byte 字节组
+		var bytes = [ 0xBE, 0xEF, 0xCA, 0xFE ];
+		var file = new Parse.File("myfile.txt", bytes); 
+
+		3, 文件扩展名
+		var file = new Parse.File("myfile.zzz", fileData, "image/png");
+
+		4，
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	</script>
+</body>
+</html>
