@@ -3,9 +3,97 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
+	<style>
+		.left{
+			list-style: none;
+			width: 100px;
+			max-height: 20px;
+		}
+		.left > li{
+			margin-bottom: 10px;
+			background: green;
+			text-align: center
+		}
+		
+		.left li.active{
+			background: red;
+		}
+
+		.left ul{
+			display: none;
+			position: absolute;
+			left: 200px;
+			top: 20px;
+			width: 400px;
+		}
+
+		.left li.active ul{
+			display: block
+		}
+	</style>
+	
 </head>
 <body>
-	new branch
 	
+	<ul class="left">
+		<li class="active">1
+			<ul class="right">
+				<li>11</li>
+				<li>12</li>
+				<li>13</li>
+				<li>14</li>
+				<li>15</li>
+			</ul>
+		</li>
+		<li>2
+			<ul class="right">
+				<li>21</li>
+				<li>22</li>
+				<li>23</li>
+				<li>24</li>
+				<li>25</li>
+			</ul>
+		</li>
+		<li>3
+			<ul class="right">
+				<li>31</li>
+				<li>32</li>
+				<li>33</li>
+				<li>34</li>
+				<li>35</li>
+			</ul>
+		</li>
+		<li>4
+			<ul class="right">
+				<li>41</li>
+				<li>42</li>
+				<li>43</li>
+				<li>44</li>
+				<li>45</li>
+			</ul>
+
+		</li>
+		<li>5
+			<ul class="right">
+				<li>51</li>
+				<li>52</li>
+				<li>53</li>
+				<li>54</li>
+				<li>55</li>
+			</ul>
+		</li>
+	</ul>
+
 </body>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+
+<script>
+	
+
+	$(function () {
+		$('.left > li').click(function(){
+			$(this).addClass('active').siblings().removeClass('active');
+		})
+	})
+</script>
 </html>
