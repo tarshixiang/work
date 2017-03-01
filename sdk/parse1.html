@@ -12,41 +12,35 @@
 <script>
 	Parse.initialize('motern');
 	Parse.serverURL = 'http://192.168.10.154:1337/parse';
-	var nnn = Parse.Object.extend("nnn");
-	var sxScore = new nnn();
-
 	
-	sxScore.set("score", 123);
-	sxScore.set("playerName", "nn3");
-	sxScore.set("cheatMode", false);
-	sxScore.set("skills", ["pwnage", "flying",2,3]);
 
-	sxScore.save(null, {
-	  success: function(sxScore) {
-	    // Now let's update it with some new data. In this case, only cheatMode and score
-	    // will get sent to the cloud. playerName hasn't changed.
-	 //    sxScore.set("cheatMode", true);
-	 //    sxScore.set("score", 12132);
-	 //    sxScore.save();
+	// var user = new Parse.User();
 
-	 //    var score = sxScore.get("score");
-		// var playerName = sxScore.get("playerName");
-		// var cheatMode = sxScore.get("cheatMode");
-		// var skills = sxScore.get("skills");
-		// var objectId = sxScore.id;
-		// var updatedAt = sxScore.updatedAt;
-		// var createdAt = sxScore.createdAt;
-			console.log('success');
-		}
-	});
+	// user.set('username','sxx');
+	// user.set('password','123');
+	// user.set('email','sy_anran@163.com');
+	// user.signUp(null,{
+	// 	success:function(){
+	// 		console.log('success')
+	// 	},
+	// 	error:function(){
+	// 		console.log('err');
+	// 	}
+	// })
+	var my = Parse.Object.extend('Sx');
+	var myInfo = new my();
+	// myInfo.set('score',123);
+	// myInfo.set('name','sx pro');
+	// myInfo.save(null,{
+	// 	success:function(){
+	// 		console.log(1);
+	// 	},
+	// 	error:function(){
+	// 		console.log(2);
+	// 	}
+	// })
 
-	var query = new Parse.Query(nnn);
-	
-	query.find({
-		success:function(res){
-			console.log(res.length);
-		}
-	})
+
 
 </script>
 </html>
